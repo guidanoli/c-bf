@@ -1,5 +1,7 @@
 # BF Compiler
 bf
+out
+out.c
 
 # Prerequisites
 *.d
