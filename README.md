@@ -1,2 +1,3 @@
-# c-bf
-C Brainfuck Compiler
+# C Brainfuck Compiler
+
+Having developed an interpreter in Lua, I thought I would give building a compiler a try. Will see...
