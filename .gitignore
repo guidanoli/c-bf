@@ -1,7 +1,7 @@
 # BF Compiler
 bf
-out
-out.c
+*.b.out
+*.b.c
 
 # Prerequisites
 *.d

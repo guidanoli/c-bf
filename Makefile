@@ -1,16 +1,15 @@
-IN = squares
-OUT = $(addsuffix .c, $(IN))
+OUT = $(addsuffix .out, $(wildcard scripts/*.b))
 
-$(OUT): bf
+all: bf $(OUT)
 
-%.c: %.b
-	./bf $< $@
-	$(CC) $@ -o $<.out
+%.b.out: %.b
+	./bf $< $<.c
+	$(CC) $<.c -o $@
 
 bf: bf.c
 	$(CC) $^ -o $@
 
 clean:
-	rm -rf *.out $(OUT)
+	cd scripts && rm -rf *.b.c *.b.out
 
-.PHONY: bf clean
+.PHONY: all clean

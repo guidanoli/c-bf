@@ -4,7 +4,10 @@
 #include <limits.h>
 
 #define BUFFER_SIZE 256
-#define TAPE_SIZE 30000
+
+#ifndef TAPE_SIZE
+    #define TAPE_SIZE 30000
+#endif
 
 #define close_io() do {     \
     if (argc > 1 && in)     \
@@ -24,16 +27,16 @@
     }                                                               \
 } while(0)                                                          \
 
-#define BFHEADER "#include <stdio.h>\nint t[%lu], *p=t;\nint main() {\n"
-#define BFADD "++(*p);\n"
-#define BFSUB "--(*p);\n"
-#define BFLFT "--p;\n"
-#define BFRGT "++p;\n"
-#define BFINP "*p=getchar();\n"
-#define BFOUT "putchar(*p);\n"
-#define BFSLP "while(*p){\n"
-#define BFELP "}\n"
-#define BFFOOTER "return 0;\n}"
+#define BF_HDR "#include <stdio.h>\nint t[%lu],*p=t;\nint main(){\n"
+#define BF_ADD "++*p;"
+#define BF_SUB "--*p;"
+#define BF_LFT "--p;"
+#define BF_RGT "++p;"
+#define BF_INP "*p=getchar();"
+#define BF_OUT "putchar(*p);"
+#define BF_SLP "while(*p){"
+#define BF_ELP "}"
+#define BF_FTR "return 0;}"
 
 int
 main(int argc, char **argv)
@@ -59,26 +62,26 @@ main(int argc, char **argv)
     unsigned long line = 0;
     unsigned long column = 0;
     unsigned long loop_lvl = 0;
-    write_out(BFHEADER, TAPE_SIZE);
+    write_out(BF_HDR, TAPE_SIZE);
     while (fgets(buffer, BUFFER_SIZE, in)) {
         for (int i = 0; i < strlen(buffer); ++i) {
             switch(buffer[i]) {
                 case '+':
-                    write_out(BFADD); break;
+                    write_out(BF_ADD); break;
                 case '-':
-                    write_out(BFSUB); break;
+                    write_out(BF_SUB); break;
                 case '<':
-                    write_out(BFLFT); break;
+                    write_out(BF_LFT); break;
                 case '>':
-                    write_out(BFRGT); break;
+                    write_out(BF_RGT); break;
                 case ',':
-                    write_out(BFINP); break;
+                    write_out(BF_INP); break;
                 case '.':
-                    write_out(BFOUT); break;
+                    write_out(BF_OUT); break;
                 case '[':
-                    write_out(BFSLP); ++loop_lvl; break;
+                    write_out(BF_SLP); ++loop_lvl; break;
                 case ']':
-                    write_out(BFELP); --loop_lvl; break;
+                    write_out(BF_ELP); --loop_lvl; break;
                 case '\n':
                     ++line; column = 0; break;
             }
@@ -90,9 +93,8 @@ main(int argc, char **argv)
             ++column;
         }
     }
-    write_out(BFFOOTER);
+    write_out(BF_FTR);
     if (loop_lvl > 0) {
-        // unbalanced brackets
         fprintf(stderr, "Expected ']' at line %lu, column %lu\n", line, column);
         close_io();
         return 1;
