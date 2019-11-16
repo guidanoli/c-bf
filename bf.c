@@ -90,7 +90,8 @@ main(int argc, char **argv)
                 close_io();
                 return 1;
             }
-            ++column;
+            if (buffer[i] != '\n')
+                ++column;
         }
     }
     write_out(BF_FTR);
