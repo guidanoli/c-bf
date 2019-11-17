@@ -46,7 +46,8 @@ main(int argc, char **argv)
     if (argc > 1) {
         in = fopen(argv[1], "r");
         if (!in) {
-            fprintf(stderr, "Cannot open %s: %s\n", argv[1], strerror(errno));
+            fprintf(stderr, "Cannot open %s: %s\n", argv[1],
+                strerror(errno));
             return 1;
         }
     }
@@ -54,7 +55,8 @@ main(int argc, char **argv)
     if (argc > 2) {
         out = fopen(argv[2], "w+");
         if (!out) {
-            fprintf(stderr, "Cannot open %s: %s\n", argv[2], strerror(errno));
+            fprintf(stderr, "Cannot open %s: %s\n", argv[2],
+                strerror(errno));
             fclose(in);
             return 1;
         }
@@ -86,7 +88,8 @@ main(int argc, char **argv)
                     ++line; column = 0; break;
             }
             if (loop_lvl == ULONG_MAX) {
-                fprintf(stderr, "Unexpected ']' at line %lu, column %lu\n", line, column);
+                fprintf(stderr, "Unexpected ']' at line %lu, column %lu\n",
+                    line, column);
                 close_io();
                 return 1;
             }
@@ -96,7 +99,8 @@ main(int argc, char **argv)
     }
     write_out(BF_FTR);
     if (loop_lvl > 0) {
-        fprintf(stderr, "Expected ']' at line %lu, column %lu\n", line, column);
+        fprintf(stderr, "Expected ']' at line %lu, column %lu\n",
+            line, column);
         close_io();
         return 1;
     }

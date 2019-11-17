@@ -4,7 +4,23 @@ Having developed an interpreter in Lua, I thought I would give building a compil
 
 ## Running
 
-Simply run `make`, which will generate the bf compiler + some programs.
+Simply run `make`, which will generate the bf compiler + some programs, and then:
+
+``` bash
+$ ./bf [input] [output_c]
+$ gcc [output_c] -o [output]
+$ ./[output]
+```
+
+If you desire to write the code in the terminal itself (stdin), then do the following:
+
+``` bash
+$ ./bf > [output_c]
+(write code and then escape input*)
+$ gcc [output_c] -o [output]
+$ ./[output]
+*Ctrl+D on Unix and Ctrl+Z on Windows
+```
 
 ## Scripts
 
